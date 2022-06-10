@@ -14,6 +14,33 @@ The code allows to easily modify and create new machines. You can (re-)define ro
 I did not implement the "rings", since these do not add to the security and would only make the machines more complex :-)
 For more details on the Enigma, have a look at the wikipedia article: https://en.wikipedia.org/wiki/Enigma_machine
 
+## Enigma equations
+For those, who are searching for the Enigma equation(s). Here they are:
+
+Some definitions:
+
+- P is our plaintext letter (as integer), and C is our ciphertext letter (as integer)
+- We assume our rotors are int arrays from 0=A to 25=Z (of course ordered by the original rotor definitions)
+- We have r1, r2, r3, ..., rn rotors
+- r1^-1 is the inverse rotor 1
+- We have a plugboard p1 that maps l1 -> l2, letter 1 is replaced by letter 2
+- p^-1 is the inverse plugboard function
+- rf is a reflector (an array, that maps any letter x to y and then also y to x)
+
+The complete Enigma is then defined as: 
+
+- C = p^-1(r1^-1(r2^-1(r3^-1(rf(r3(r2(r1(p(P)))))))))
+
+The current first goes through the plugboard, then through the three rotors, then through the reflector, then through the (inverse) three rotors, and finally through the (inverse) plugboard.
+
+A single rotor r is defined as (rotorarray is an int array defining the rotor mapping): 
+
+- C = Mod(rotorarray[Mod(P + Rotation, rotorarray.Length)] - Rotation, rotorarray.Length)
+
+Clearly, the inverse rotor is the inverse int array, meaning, if the original maps 5 to 3, then the inverse maps 3 to 5
+
+## Some videos
+
 I also created YouTube videos about Enigma, if you are interested in the details of the machine and its cryptanalysis:
 - Enigma Machine – Part 1 of 2 – How does it work? -> https://www.youtube.com/watch?v=FG59my_HLtI
 - Enigma Machine – Part 2 of 2 – Let's break it! -> https://www.youtube.com/watch?v=MqNgagh6qpY
