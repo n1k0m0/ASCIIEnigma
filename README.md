@@ -31,6 +31,8 @@ The complete Enigma is then defined as:
 
 - C = p^-1(r1^-1(r2^-1(r3^-1(rf(r3(r2(r1(p(P)))))))))
 
+![enigma_equation.png](https://github.com/n1k0m0/ASCIIEnigma/blob/main/images/enigma_equation.png)
+
 The current first goes through the plugboard, then through the three rotors, then through the reflector, then through the (inverse) three rotors, and finally through the (inverse) plugboard.
 
 A single rotor r is defined as (rotorarray is an int array defining the rotor mapping): 
