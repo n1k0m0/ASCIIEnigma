@@ -1,6 +1,8 @@
 # ASCIIEnigma
 Implementation of various (original and "new") Enigma machines: original Enigma 1, "Morse Enigma", "Enigma 64", "ASCIIEnigma".
 
+A full video about the different machines and this implementation here is available on my YouTube channel: https://www.youtube.com/watch?v=Uk1NuwEfNKs
+
 The "ASCIIEnigma" is an Enigma machine, that does not only work on 26 letters, but on the complete ASCII code (=256 symbols).
 
 The project implements these "Enigmas":
