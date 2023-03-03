@@ -49,3 +49,7 @@ I also created YouTube videos about Enigma, if you are interested in the details
 - Enigma Machine – Part 1 of 2 – How does it work? -> https://www.youtube.com/watch?v=FG59my_HLtI
 - Enigma Machine – Part 2 of 2 – Let's break it! -> https://www.youtube.com/watch?v=MqNgagh6qpY
 - Enigma Cryptanalysis Revisited – New State-of-the-Art Attacks on the Enigma Machine in CrypTool 2 -> https://www.youtube.com/watch?v=kptQbcTUVyk
+
+## Updates 2023/03/03 ##
+- I also implemented the "Typex". Right now, it only supports the "Cyberchef" version: see https://gchq.github.io/CyberChef/
+- I added the double stepping anomaly, which causes the middle rotor of Enigma (and Typex) also to rotate, when the left-most rotor rotates
