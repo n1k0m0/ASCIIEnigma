@@ -23,6 +23,10 @@ namespace ASCIIEnigma
     {
         public static void Main(string[] args)
         {
+            //
+            // Enigma machines
+            //
+
             Console.WriteLine("Test Enigma 1:");
             TestEnigma1();
             Console.WriteLine();
@@ -37,6 +41,15 @@ namespace ASCIIEnigma
 
             Console.WriteLine("Test Enigma ASCII:");
             TestASCIIEnigma();
+            Console.WriteLine();            
+
+
+            //
+            // Typex machines
+            //
+
+            Console.WriteLine("Test Typex Cyberchef:");
+            TestTypexCyberchef();
             Console.WriteLine();
 
             Console.ReadLine(); //forces the console application to stay open until user presses enter
@@ -57,8 +70,8 @@ namespace ASCIIEnigma
 
             //create rotors for machine
             Rotor rotor1 = new Rotor(MapTextIntoNumberSpace(Enigma1.RotorI, Alphabets.Alphabet26), Enigma1.RotorINotches, 0);
-            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(Enigma1.RotorII, Alphabets.Alphabet26), Enigma1.RotorIINotches, 0);
-            Rotor rotor3 = new Rotor(MapTextIntoNumberSpace(Enigma1.RotorIII, Alphabets.Alphabet26), Enigma1.RotorIIINotches, 0);
+            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(Enigma1.RotorII, Alphabets.Alphabet26), Enigma1.RotorIINotches, 0, hasAnomaly:true);
+            Rotor rotor3 = new Rotor(MapTextIntoNumberSpace(Enigma1.RotorIII, Alphabets.Alphabet26), Enigma1.RotorIIINotches, 0);        
             Rotor reflector = new Rotor(MapTextIntoNumberSpace(Enigma1.UKWA, Alphabets.Alphabet26), null, 0);
 
             //create machine
@@ -69,6 +82,7 @@ namespace ASCIIEnigma
             };
 
             string text = "HELLOXWORLDXTHISXISXAXTESTXTEXT";
+
             //encrypt/decrypt and print all to console
             Console.WriteLine(text);
             int[] plaintext = MapTextIntoNumberSpace(text, Alphabets.Alphabet26);
@@ -79,7 +93,7 @@ namespace ASCIIEnigma
             enigma1.Key = key;
             int[] decrypted = enigma1.CryptText(ciphertext);
             Console.WriteLine(MapNumbersIntoTextSpace(decrypted, Alphabets.Alphabet26));
-        }
+        }        
 
         /// <summary>
         /// Tests the "Enigma Morse"
@@ -90,7 +104,7 @@ namespace ASCIIEnigma
 
             //create rotors for machine
             Rotor rotor1 = new Rotor(MapTextIntoNumberSpace(EnigmaMorse.RotorA, Alphabets.AlphabetM), EnigmaMorse.RotorANotches, 0);
-            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(EnigmaMorse.RotorB, Alphabets.AlphabetM), EnigmaMorse.RotorBNotches, 0);
+            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(EnigmaMorse.RotorB, Alphabets.AlphabetM), EnigmaMorse.RotorBNotches, 0, hasAnomaly: true);
             Rotor rotor3 = new Rotor(MapTextIntoNumberSpace(EnigmaMorse.RotorC, Alphabets.AlphabetM), EnigmaMorse.RotorCNotches, 0);
             Rotor rotor4 = new Rotor(MapTextIntoNumberSpace(EnigmaMorse.RotorD, Alphabets.AlphabetM), EnigmaMorse.RotorDNotches, 0);
             Rotor reflectorM = new Rotor(MapTextIntoNumberSpace(EnigmaMorse.Reflector, Alphabets.AlphabetM), null, 0);
@@ -124,7 +138,7 @@ namespace ASCIIEnigma
 
             //create rotors for machine
             Rotor rotor1 = new Rotor(MapTextIntoNumberSpace(Enigma64.RotorF, Alphabets.Alphabet64), Enigma64.RotorFNotches, 0);
-            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(Enigma64.RotorB, Alphabets.Alphabet64), Enigma64.RotorBNotches, 0);
+            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(Enigma64.RotorB, Alphabets.Alphabet64), Enigma64.RotorBNotches, 0, hasAnomaly: true);
             Rotor rotor3 = new Rotor(MapTextIntoNumberSpace(Enigma64.RotorE, Alphabets.Alphabet64), Enigma64.RotorENotches, 0);
             Rotor rotor4 = new Rotor(MapTextIntoNumberSpace(Enigma64.RotorD, Alphabets.Alphabet64), Enigma64.RotorDNotches, 0);
             Rotor reflector64 = new Rotor(MapTextIntoNumberSpace(Enigma64.Reflector64, Alphabets.Alphabet64), null, 0);
@@ -183,6 +197,45 @@ namespace ASCIIEnigma
             asciiEnigma.Key = key;
             int[] decrypted = asciiEnigma.CryptText(ciphertext);
             Console.WriteLine(decrypted.GetString());
+        }
+
+        /// <summary>
+        /// Tests the original Enigma M1
+        /// </summary>
+        private static void TestTypexCyberchef()
+        {
+            int[] key = new int[] { 0, 0, 0, 0, 0, 0 }; // A A A A A 
+           
+            //create rotors for machine
+            Stator entry = new Stator(MapTextIntoNumberSpace(Typex_Cyberchef.Entry, Alphabets.Alphabet26), null, 0);
+            Stator stator1 = new Stator(MapTextIntoNumberSpace(Typex_Cyberchef.Rotor5, Alphabets.Alphabet26), null, 0);
+            Stator stator2 = new Stator(MapTextIntoNumberSpace(Typex_Cyberchef.Rotor4, Alphabets.Alphabet26), null, 0);
+            Rotor rotor1 = new Rotor(MapTextIntoNumberSpace(Typex_Cyberchef.Rotor3, Alphabets.Alphabet26), Typex_Cyberchef.Notches, 0);
+            Rotor rotor2 = new Rotor(MapTextIntoNumberSpace(Typex_Cyberchef.Rotor2, Alphabets.Alphabet26), Typex_Cyberchef.Notches, 0, hasAnomaly: true);
+            Rotor rotor3 = new Rotor(MapTextIntoNumberSpace(Typex_Cyberchef.Rotor1, Alphabets.Alphabet26), Typex_Cyberchef.Notches, 0);
+            Rotor reflector = new Rotor(MapTextIntoNumberSpace(Typex_Cyberchef.Reflector, Alphabets.Alphabet26), null, 0);
+
+            Rotor[] rotors = new Rotor[] { entry, stator1, stator2, rotor1, rotor2, rotor3 };
+
+            //create machine
+            RotorMachine typex = new RotorMachine(rotors, reflector, null, Alphabets.Alphabet26)
+            {
+                //reset machine key
+                Key = key
+            };
+
+            string text = "HELLOXWORLDXTHISXISXAXTESTXTEXT";
+
+            //encrypt/decrypt and print all to console
+            Console.WriteLine(text);
+            int[] plaintext = MapTextIntoNumberSpace(text, Alphabets.Alphabet26);
+            int[] ciphertext = typex.CryptText(plaintext);
+            //ciphertext should be: PDEBFQXSVRWJCZZFSJYWELDTTMFPPVA
+            Console.WriteLine(MapNumbersIntoTextSpace(ciphertext, Alphabets.Alphabet26));
+            //reset machine key
+            typex.Key = key;
+            int[] decrypted = typex.CryptText(ciphertext);
+            Console.WriteLine(MapNumbersIntoTextSpace(decrypted, Alphabets.Alphabet26));
         }
     }
 }

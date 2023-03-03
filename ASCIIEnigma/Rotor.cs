@@ -13,6 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System;
+using System.Collections.Generic;
 using static ASCIIEnigma.Util;
 
 namespace ASCIIEnigma
@@ -23,10 +25,15 @@ namespace ASCIIEnigma
     /// </summary>
     public class Rotor
     {
-        private readonly int[] _rotor;
-        private readonly int[] _inverseRotor;
+        protected int[] _rotor;
+        protected int[] _inverseRotor;
         private readonly int[] _notches;
         private int _rotation;
+
+        public bool HasAnomaly
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Creates a rotor with the given parameters
@@ -34,13 +41,14 @@ namespace ASCIIEnigma
         /// <param name="rotor"></param>
         /// <param name="notches"></param>
         /// <param name="rotation"></param>
-        public Rotor(int[] rotor, int[] notches, int rotation)
+        public Rotor(int[] rotor, int[] notches, int rotation, bool hasAnomaly = false)
         {
             _rotor = rotor;
             _notches = notches;
             _inverseRotor = GenerateInverseRotor(rotor);
             Rotation = Mod(rotation, _rotor.Length);
-        }
+            HasAnomaly = hasAnomaly;
+        }        
 
         /// <summary>
         /// Current rotation of this rotor
@@ -69,18 +77,27 @@ namespace ASCIIEnigma
         /// <summary>
         /// Move rotor one step
         /// </summary>
-        public void Step()
+        public virtual void Step()
         {
-            Rotation = Mod(Rotation + 1, _rotor.Length);
+            _rotation = Mod(_rotation + 1, _rotor.Length);
         }
 
         /// <summary>
         /// Returns true, if rotor is currently at a notch position
         /// </summary>
         /// <returns></returns>
-        public bool IsAtNotchPosition()
+        public virtual bool IsAtNotchPosition()
         {
             return _notches.Contains(Rotation);
+        }
+
+        /// <summary>
+        /// Returns true, if rotor is currently at a notch position
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool WillBeAtNotchPosition()
+        {
+            return _notches.Contains(Util.Mod(Rotation + 1, _rotor.Length));
         }
 
         /// <summary>
@@ -101,6 +118,6 @@ namespace ASCIIEnigma
         public int Decrypt(int ciphertextLetter)
         {
             return Mod(_inverseRotor[Mod(ciphertextLetter + Rotation, _inverseRotor.Length)] - Rotation, _inverseRotor.Length);
-        }
+        }        
     }
 }

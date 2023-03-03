@@ -13,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System;
 using static ASCIIEnigma.Constants;
 using static ASCIIEnigma.Util;
 
@@ -119,18 +120,21 @@ namespace ASCIIEnigma
             //Step rotors
             int r = 0;
             do
-            {
-                _rotors[r].Step();
-                if (_rotors[r].IsAtNotchPosition())
+            {               
+                _rotors[r].Step();              
+                if (_rotors[r].IsAtNotchPosition() ||
+                (r < _rotors.Length - 1 && 
+                    _rotors[r + 1].HasAnomaly &&
+                    _rotors[r + 1].WillBeAtNotchPosition()))
                 {
-                    r++; // next rotor should step
+                    r++; // next rotor should step                    
                 }
                 else
                 {
                     break; // stop 
                 }
             } while (r < _rotors.Length);
-
+            
             //1. Go through plugboard
             letter = _plugboard.Crypt(letter);
 
